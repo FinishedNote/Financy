@@ -16,6 +16,31 @@ app.add_middleware(
 
 @app.get("/")
 def home():
-    return {"message": "engine online!"}
+    return {"info": "engine online!"}
+
+
+@app.get("/simulate/{ticker}")
+def simulate_strategy(ticker: str, window: int = 50):
+    try:
+        data = yf.download(ticker, period="1y", interval="1d", progress=False)
+
+        if data.empty:
+            return {"error": "ticker unknown"}
+    
+    except Exception as err:
+        return {"error": err}
+    
+    data = data['Close'].reset_index()
+    data.columns = ['Date', 'Price']
+
+    data['MA'] = data['Price'].rolling(window=window).mean()
+
+    return {
+        "ticker": ticker.upper(),
+        "period": "1y",
+        "window": window,
+        "chart_data": data[['Date', 'Price', 'MA']].dropna().to_dict(orient='records')
+    }
+
 
 # uvicorn main:app --reload
