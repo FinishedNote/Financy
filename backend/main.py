@@ -34,10 +34,12 @@ def simulate_strategy(ticker: str, window: int = 50):
     data.columns = ['Date', 'Price']
 
     data['MA'] = data['Price'].rolling(window=window).mean()
+    current_price = data['Price'].iloc[-1]
 
     return {
         "ticker": ticker.upper(),
         "period": "1y",
+        "current_price": round(current_price, 2),
         "window": window,
         "chart_data": data[['Date', 'Price', 'MA']].dropna().to_dict(orient='records')
     }
