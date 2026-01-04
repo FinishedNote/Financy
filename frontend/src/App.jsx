@@ -3,6 +3,7 @@ import ky from "ky";
 import Header from "./components/Header";
 import CustomInput from "./components/CustomInput";
 import LineGraph from "./components/LineGraph";
+import Navbar from "./components/Navbar";
 
 const App = () => {
   const [ticker, setTicker] = useState("");
@@ -44,8 +45,9 @@ const App = () => {
   };
 
   return (
-    <div className="w-screen h-screen flex flex-col items-center gap-5">
+    <div className="w-screen h-screen flex flex-col gap-5">
       <Header />
+      <Navbar />
       <div className="w-full h-full flex flex-col justify-center items-center gap-5 px-20 pb-10">
         <div className="w-2/5 flex flex-col gap-5">
           <div className="w-full flex justify-center gap-2.5">
@@ -64,7 +66,7 @@ const App = () => {
             <p className="flex flex-col text-xl text-tint-gray">
               Current Price
               <span className="text-white font-medium">
-                {currentPrice ? currentPrice + " $" : "undifined"}
+                {currentPrice ? currentPrice + " $" : "[...] $"}
               </span>
             </p>
             <p className="flex flex-col text-xl text-tint-gray">

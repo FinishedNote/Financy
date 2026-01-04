@@ -88,7 +88,7 @@ const LineGraph = ({ data }) => {
             return context[0].label;
           },
           label: (context) => {
-            return `Prix: ${context.parsed.y.toFixed(2)}`;
+            return `Price: ${context.parsed.y.toFixed(2)}`;
           },
         },
       },
