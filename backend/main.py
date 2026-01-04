@@ -20,7 +20,7 @@ def home():
 
 
 @app.get("/simulate/{ticker}")
-def simulate_strategy(ticker: str, window: int = 50):
+def simulate_strategy(ticker: str, window: int = 30):
     try:
         data = yf.download(ticker, period="1y", interval="1d", progress=False)
 
@@ -34,13 +34,18 @@ def simulate_strategy(ticker: str, window: int = 50):
     data.columns = ['Date', 'Price']
 
     data['MA'] = data['Price'].rolling(window=window).mean()
+
     current_price = data['Price'].iloc[-1]
+    start_price = data['Price'].iloc[0]
+
+    market_return = ((current_price - start_price) / start_price) * 100
 
     return {
         "ticker": ticker.upper(),
         "period": "1y",
         "current_price": round(current_price, 2),
         "window": window,
+        "market_return_percent": round(market_return, 2),
         "chart_data": data[['Date', 'Price', 'MA']].dropna().to_dict(orient='records')
     }
 

@@ -56,6 +56,14 @@ const LineGraph = ({ data }) => {
         pointRadius: 0,
         pointHoverRadius: 5,
       },
+      {
+        label: "MM",
+        data: data && data.ma,
+        borderColor: "#ffc107",
+        borderWidth: 2,
+        pointRadius: 0,
+        borderDash: [5, 5],
+      },
     ],
   };
 
@@ -85,6 +93,7 @@ const LineGraph = ({ data }) => {
         },
       },
     },
+    responsive: true,
     interaction: {
       mode: "index",
       intersect: false,
